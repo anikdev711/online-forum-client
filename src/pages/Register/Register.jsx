@@ -5,9 +5,10 @@ import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import LoginButton from "../../components/Button/LoginButton/LoginButton";
 
 const Register = () => {
-    const { registrationToForum, profileUpdate } = useAuth();
+    const { registrationToForum, profileUpdate, googleSignInToForum } = useAuth();
     const axiosPublicUser = useAxiosPublic();
     const navigate = useNavigate();
     const {
@@ -79,6 +80,68 @@ const Register = () => {
 
 
     }
+
+    const handleGoogleSignIn = (event) => {
+        event.preventDefault();
+        googleSignInToForum()
+            .then(result => {
+                const googleSignedInUserToForum = result.user;
+                console.log(googleSignedInUserToForum);
+
+                const name = googleSignedInUserToForum.displayName;
+                const email = googleSignedInUserToForum.email;
+                const photoURL = googleSignedInUserToForum.photoURL;
+                const badge = 'bronze';
+
+                const googleUserInformation = {
+                    name,
+                    email,
+                    photoURL,
+                    badge
+                }
+
+                console.log(googleUserInformation);
+
+                axiosPublicUser.post('/users', googleUserInformation)
+                    .then(res => {
+                        console.log(res);
+                        if (res.data.insertedId) {
+                            reset();
+                            Swal.fire({
+                                title: "Registration successful",
+                                showClass: {
+                                    popup: `
+                            animate__animated
+                            animate__fadeInUp
+                            animate__faster
+                          `
+                                },
+                                hideClass: {
+                                    popup: `
+                            animate__animated
+                            animate__fadeOutDown
+                            animate__faster
+                          `
+                                }
+                            });
+                            navigate('/')
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+
+
+
+
+
 
     return (
         <div>
@@ -175,6 +238,15 @@ const Register = () => {
 
                         </form>
                         <p className="text-center pb-4">Have account? Please <Link className="text-blue-600 font-bold" to="/login">Login</Link> </p>
+
+                        <h3 className="text-center mb-5 font-bold">---OR---</h3>
+
+                        <div onClick={handleGoogleSignIn} className="text-center mb-10">
+                            <LoginButton></LoginButton>
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>

@@ -4,11 +4,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { Controller, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import LoginButton from "../../components/Button/LoginButton/LoginButton";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+
 
 const Login = () => {
-    const { loginToForum } = useAuth();
+    const { loginToForum, googleSignInToForum } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
+    const axiosPublicUser = useAxiosPublic();
     const from = location.state?.from?.pathname || '/';
     const {
         handleSubmit,
@@ -45,6 +49,42 @@ const Login = () => {
                 console.log(error);
             })
 
+    }
+
+    const handleGoogleSignIn = (event) => {
+        event.preventDefault();
+        googleSignInToForum()
+            .then(result => {
+                const googleSignedInUserToForum = result.user;
+                console.log(googleSignedInUserToForum);
+
+                const name = googleSignedInUserToForum.displayName;
+                const email = googleSignedInUserToForum.email;
+                const photoURL = googleSignedInUserToForum.photoURL;
+                const badge = 'bronze';
+
+                const googleUserInformation = {
+                    name,
+                    email,
+                    photoURL,
+                    badge
+                }
+
+                console.log(googleUserInformation);
+
+                axiosPublicUser.post('/users', googleUserInformation)
+                    .then(res => {
+                        console.log(res);
+                        navigate(from, { replace: true });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     return (
@@ -111,9 +151,21 @@ const Login = () => {
                                 </div>
                             </form>
                             <p className="text-center pb-4">New user? Please <Link className="text-blue-600 font-bold" to="/register">Register</Link> </p>
+                            <h3 className="text-center mb-5 font-bold">---OR---</h3>
+
+                            <div onClick={handleGoogleSignIn} className="text-center mb-10">
+                                <LoginButton></LoginButton>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+                {/* <h3 className="text-center mb-5 font-bold">---OR---</h3>
+
+                <div className="text-center mb-10">
+                    <LoginButton></LoginButton>
+                </div> */}
 
 
 
