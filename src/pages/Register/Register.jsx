@@ -2,10 +2,14 @@ import useAuth from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import registerImage from "../../assets/register/register.png"
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const Register = () => {
     const { registrationToForum, profileUpdate } = useAuth();
+    const axiosPublicUser = useAxiosPublic();
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -28,9 +32,42 @@ const Register = () => {
                         console.log('profile updated successfully');
                         const registeredUserInformation = {
                             name: data.name,
-                            email: data.email
+                            email: data.email,
+                            photoURL: data.photoURL,
+                            badge: data.badge
+
                         }
                         console.log(registeredUserInformation);
+
+                        //user added into database
+                        axiosPublicUser.post('/users', registeredUserInformation)
+                            .then(res => {
+                                console.log(res);
+                                if (res.data.insertedId) {
+                                    reset();
+                                    Swal.fire({
+                                        title: "Registration successful",
+                                        showClass: {
+                                            popup: `
+                                        animate__animated
+                                        animate__fadeInUp
+                                        animate__faster
+                                      `
+                                        },
+                                        hideClass: {
+                                            popup: `
+                                        animate__animated
+                                        animate__fadeOutDown
+                                        animate__faster
+                                      `
+                                        }
+                                    });
+                                    navigate('/')
+                                }
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            })
                     })
                     .catch((error) => {
                         console.log(error);
@@ -104,11 +141,19 @@ const Register = () => {
                                 </label>
                                 <input
                                     type="password"
-                                    {...register("password", { required: true })}
+                                    {...register("password", {
+                                        required: true,
+                                        minLength: 6,
+                                        maxLength: 20,
+                                        pattern: /(?=.*\d)(?=.*[A-Za-z])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]/
+                                    })}
                                     name="password"
                                     placeholder="Enter password..."
                                     className="input input-bordered" />
-                                {errors.password && <span className="text-red-500 font-bold">This field is necessary</span>}
+                                {errors.password?.type === "required" && (<p className="text-red-500 font-bold" role="alert">Password needed</p>)}
+                                {errors.password?.type === "minLength" && (<p className="text-red-500 font-bold" role="alert">Password needed minimum 6 characters</p>)}
+                                {errors.password?.type === "maxLength" && (<p className="text-red-500 font-bold" role="alert">Password must not exceeded 20 characters</p>)}
+                                {errors.password?.type === "pattern" && (<p className="text-red-500 font-bold" role="alert">Password must have at least one number, one letter and one special character</p>)}
 
                             </div>
                             <div className="flex justify-between gap-5">
