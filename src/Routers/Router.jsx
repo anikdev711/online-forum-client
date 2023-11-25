@@ -7,6 +7,9 @@ import SearchDetails from "../pages/Home/SearchDetails";
 import Register from "../pages/Register/Register";
 import Login from "../pages/Login/Login";
 import DashboardLayout from "../layout/DashboardLayout";
+import MyProfile from "../pages/Dashboard/UserHome/MyProfile/MyProfile";
+import AddPost from "../pages/Dashboard/UserHome/AddPost/AddPost";
+import MyPosts from "../pages/Dashboard/UserHome/MyPosts/MyPosts";
 // import Dashboard from "../layout/Dashboard";
 
 
@@ -42,6 +45,19 @@ export const router = createBrowserRouter([
         path: "dashboard",
         element: <DashboardLayout></DashboardLayout>,
         children: [
+
+            {
+                path: "my-profile",
+                element: <MyProfile></MyProfile>
+            },
+            {
+                path: "add-post",
+                element: <AddPost></AddPost>
+            },
+            {
+                path: "my-posts",
+                element: <MyPosts></MyPosts>
+            }
 
         ]
     }
