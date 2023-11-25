@@ -70,7 +70,7 @@ const Navbar = () => {
                                             {user?.displayName ? user?.displayName : 'Anonymous/Reload'}
                                         </p>
                                     </li>
-                                    <li><a>Dashboard</a></li>
+                                    <li><Link to="/dashboard">Dashboard</Link></li>
                                     <li>
                                         <button onClick={handleUserLogOutFromForum}
                                             className="btn btn-neutral font-bold text-white">

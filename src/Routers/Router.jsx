@@ -6,6 +6,8 @@ import Membership from "../pages/Membership/Membership";
 import SearchDetails from "../pages/Home/SearchDetails";
 import Register from "../pages/Register/Register";
 import Login from "../pages/Login/Login";
+import DashboardLayout from "../layout/DashboardLayout";
+// import Dashboard from "../layout/Dashboard";
 
 
 export const router = createBrowserRouter([
@@ -36,4 +38,16 @@ export const router = createBrowserRouter([
             }
         ]
     },
+    {
+        path: "dashboard",
+        element: <DashboardLayout></DashboardLayout>,
+        children: [
+
+        ]
+    }
+
+
+
+
+
 ]);
