@@ -1,8 +1,23 @@
 
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logoImage from "../../../assets/logo/logo.png"
+import useAuth from "../../../hooks/useAuth";
+// import profileImage from "../../../assets/register/profile.png"
 
 const Navbar = () => {
+    const { user, signOutFromForum } = useAuth();
+
+    const handleUserLogOutFromForum = () => {
+        signOutFromForum()
+            .then(() => {
+                console.log('user logged out');
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+
     const navLinks = <>
         <li> <NavLink to="/">Home</NavLink> </li>
         <li> <NavLink to="/membership">Membership</NavLink> </li>
@@ -40,7 +55,40 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Join Now</a>
+
+                    {
+                        user ? (
+                            <div className="dropdown dropdown-end">
+                                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-10 rounded-full">
+                                        <img alt="Tailwind CSS Navbar component" src={user?.photoURL ? user?.photoURL : 'https://i.imgur.com/02tW9pI.png'} />
+                                    </div>
+                                </label>
+                                <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                                    <li>
+                                        <p>
+                                            {user?.displayName ? user?.displayName : 'Anonymous/Reload'}
+                                        </p>
+                                    </li>
+                                    <li><a>Dashboard</a></li>
+                                    <li>
+                                        <button onClick={handleUserLogOutFromForum}
+                                            className="btn btn-neutral font-bold text-white">
+                                            Logout
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        ) : (
+                            <Link to="/login">
+                                <button className="btn">Join US</button>
+                            </Link>
+                        )
+                    }
+
+
+
+
                 </div>
             </div>
         </div>

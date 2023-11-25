@@ -14,7 +14,7 @@ const Banner = () => {
                     </div>
                     <div className="w-1/2">
                         <h1 className="text-5xl text-center font-bold">Welcome to our forum</h1>
-                        <p className="py-6 text-center">In Byte Talks forum, you can post your opinions or questions. The community will help you.You can also find useful posts of others in this community.</p>
+                        <p className="py-6 text-center">In Byte Talks forum, you can post your opinions or questions about web, app development, IoT, cyber security and blockchain. The community will help you.You can also find useful posts of others in this community.</p>
                         <Link to="/search">
                             <button className="btn btn-neutral text-white font-extrabold w-full">Search In Forum <FaSearch /> </button>
                         </Link>
