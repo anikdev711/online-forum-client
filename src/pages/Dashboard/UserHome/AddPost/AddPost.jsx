@@ -3,7 +3,8 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { SlDislike, SlLike } from "react-icons/sl";
+// import MyPosts from "../MyPosts/MyPosts";
+// import { SlDislike, SlLike } from "react-icons/sl";
 // import AddPostCard from "./AddPostCard";
 // import Select from 'react-select'
 // import Select from "react-select/dist/declarations/src/Select";
@@ -28,8 +29,8 @@ const AddPost = () => {
     // const [upVoteCount, setUpVoteCount] = useState(0);
     // const [downVoteCount, setDownVoteCount] = useState(0);
     // const [authorName, setAuthorName] = useState('');
+    // const [allPosts, setAllPosts] = useState([]);
     const [userPostsCount, setUserPostsCount] = useState(0);
-    const [allPosts, setAllPosts] = useState([]);
     const axiosSecureUser = useAxiosSecure();
     // const [tag, setTag] = useState('');
     // const [tags, setTags] = useState([
@@ -71,16 +72,16 @@ const AddPost = () => {
 
     // })
 
-    useEffect(() => {
-        axiosSecureUser.get('/posts')
-            .then(res => {
-                console.log(res);
-                setAllPosts(res.data)
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }, [axiosSecureUser])
+    // useEffect(() => {
+    //     axiosSecureUser.get('/posts')
+    //         .then(res => {
+    //             console.log(res);
+    //             setAllPosts(res.data)
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         })
+    // }, [axiosSecureUser])
 
 
     const handleAddPostOfUser = async (data) => {
@@ -130,27 +131,25 @@ const AddPost = () => {
 
     }
 
-    const handleUpVoteOfUser = (userPostId) => {
-        axiosSecureUser.post('/posts/vote', { userPostId, userVoteType: 'upVote' })
-            .then(res => {
-                console.log(res);
-                // setUpVoteCount(res.data);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    };
+    // const handleUpVoteOfUser = (userPostId) => {
+    //     axiosSecureUser.post('/posts/vote', { userPostId, userVoteType: 'upVote' })
+    //         .then(res => {
+    //             console.log(res);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         })
+    // };
 
-    const handleDownVoteOfUser = (userPostId) => {
-        axiosSecureUser.post('/posts/vote', { userPostId, userVoteType: 'downVote' })
-            .then(res => {
-                console.log(res);
-                // setDownVoteCount(res.data);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    };
+    // const handleDownVoteOfUser = (userPostId) => {
+    //     axiosSecureUser.post('/posts/vote', { userPostId, userVoteType: 'downVote' })
+    //         .then(res => {
+    //             console.log(res);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         })
+    // };
 
 
 
@@ -267,7 +266,7 @@ const AddPost = () => {
                 )
             }
             <div>
-                {
+                {/* {
                     allPosts.map(post => (
                         <div key={post._id}>
                             <p>{post.postTitle}</p>
@@ -286,7 +285,19 @@ const AddPost = () => {
                             </button>
                         </div>
                     ))
-                }
+                } */}
+                {/* {
+                    allPosts.map(post => (<MyPosts 
+                        key={post._id}
+                        post={post}
+                        handleUpVoteOfUser={handleUpVoteOfUser}
+                        handleDownVoteOfUser={handleDownVoteOfUser}
+                    ></MyPosts>) )
+                } */}
+                {/* <MyPosts
+                    allPosts={allPosts}
+                    handleUpVoteOfUser={handleUpVoteOfUser}
+                    handleDownVoteOfUser={handleDownVoteOfUser}></MyPosts> */}
             </div>
         </div>
     );
