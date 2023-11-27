@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import Swal from "sweetalert2";
 
 const ManageUsers = () => {
     const axiosSecureUser = useAxiosSecure();
@@ -15,6 +16,41 @@ const ManageUsers = () => {
         }
     })
     console.log(forumUsers);
+
+    //make admin
+    const handleMakeAdminOfForum = (id) => {
+        axiosSecureUser.put(`/users/${id}`)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        title: "Make admin successfully",
+                        showClass: {
+                            popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                      `
+                        },
+                        hideClass: {
+                            popup: `
+                        animate__animated
+                        animate__fadeOutDown
+                        animate__faster
+                      `
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+
+
+
     return (
         <div>
             <h1 className="font-bold text-3xl text-center mb-5">Manage Users</h1>
@@ -43,7 +79,13 @@ const ManageUsers = () => {
                                         <td>{user.name}</td>
                                         <td>{user.email}</td>
                                         <td>
-                                            <button className="btn btn-neutral text-white font-bold">Make Admin</button>
+                                            {
+                                                user?.role ? user?.role :
+
+                                                    <button
+                                                        onClick={() => handleMakeAdminOfForum(user._id)}
+                                                        className="btn btn-neutral text-white font-bold">Make Admin</button>
+                                            }
                                         </td>
                                         <td>{user.badge}</td>
                                         <td>
