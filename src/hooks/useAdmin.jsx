@@ -7,14 +7,14 @@ const useAdmin = () => {
     const { user } = useAuth();
     const axiosSecureUser = useAxiosSecure();
     const {
-        data: forumAdmin, 
+        data: forumAdmin,
         isPending: forumAdminLoading
     } = useQuery({
         queryKey: ['admin'],
         queryFn: async () => {
             const res = await axiosSecureUser.get(`/users/admin/${user?.email}`);
             console.log(res);
-            return res.data;
+            return res.data?.admin;
         }
     })
 
