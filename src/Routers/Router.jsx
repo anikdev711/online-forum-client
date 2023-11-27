@@ -11,6 +11,11 @@ import MyProfile from "../pages/Dashboard/UserHome/MyProfile/MyProfile";
 import AddPost from "../pages/Dashboard/UserHome/AddPost/AddPost";
 import MyPosts from "../pages/Dashboard/UserHome/MyPosts/MyPosts";
 import MyPostComments from "../pages/Dashboard/UserHome/MyPosts/MyPostComments";
+import AdminRoute from "./AdminRoute";
+import AdminProfile from "../pages/Dashboard/AdminHome/AdminProfile/AdminProfile";
+import ManageUsers from "../pages/Dashboard/AdminHome/ManageUsers/ManageUsers";
+import ReportedComments from "../pages/Dashboard/AdminHome/ReportedComments/ReportedComments";
+import MakeAnnouncement from "../pages/Dashboard/AdminHome/MakeAnnouncement/MakeAnnouncement";
 // import Dashboard from "../layout/Dashboard";
 
 
@@ -58,12 +63,39 @@ export const router = createBrowserRouter([
             {
                 path: "my-posts",
                 element: <MyPosts></MyPosts>,
-                
+
             },
             {
                 path: "my-posts/comments/:id",
                 element: <MyPostComments></MyPostComments>,
                 loader: ({ params }) => fetch(`http://localhost:5000/posts/comments/${params.id}`)
+            },
+
+
+            //admin routes
+            {
+                path: "admin-profile",
+                element: <AdminRoute>
+                    <AdminProfile></AdminProfile>
+                </AdminRoute>
+            },
+            {
+                path: "manage-users",
+                element: <AdminRoute>
+                    <ManageUsers></ManageUsers>
+                </AdminRoute>
+            },
+            {
+                path: "reported-comments",
+                element: <AdminRoute>
+                    <ReportedComments></ReportedComments>
+                </AdminRoute>
+            },
+            {
+                path: "make-announcement",
+                element: <AdminRoute>
+                    <MakeAnnouncement></MakeAnnouncement>
+                </AdminRoute>
             }
 
 

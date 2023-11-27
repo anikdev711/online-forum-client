@@ -36,6 +36,7 @@ const Register = () => {
                             email: data.email,
                             photoURL: data.photoURL,
                             badge: data.badge
+                            
 
                         }
                         console.log(registeredUserInformation);

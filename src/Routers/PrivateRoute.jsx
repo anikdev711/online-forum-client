@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import Loader from "../components/Loader/Loader";
+// import Loader from "../components/Loader/Loader";
 import useAuth from "../hooks/useAuth";
 
 const PrivateRoute = ({ children }) => {
@@ -9,7 +9,7 @@ const PrivateRoute = ({ children }) => {
 
 
     if (loading) {
-        return <Loader className="flex justify-center items-center h-screen"></Loader>
+        return <div className="flex justify-center items-center h-screen"><progress className="progress w-56"></progress></div>
     }
 
     if (user) {
