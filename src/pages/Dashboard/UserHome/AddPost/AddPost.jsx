@@ -3,44 +3,31 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-// import MyPosts from "../MyPosts/MyPosts";
-// import { SlDislike, SlLike } from "react-icons/sl";
-// import AddPostCard from "./AddPostCard";
-// import Select from 'react-select'
-// import Select from "react-select/dist/declarations/src/Select";
-// import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../../hooks/useAxiosPublic";
+import { SlLike, SlDislike } from "react-icons/sl";
+import {
+    FacebookShareButton,
+    LinkedinShareButton,
+    TwitterShareButton
+} from "react-share";
+import { FaFacebook, FaLinkedin, FaTwitterSquare } from "react-icons/fa";
+import CommentForm from "../../../../components/CommentForm/CommentForm";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
-// const options = [
-//     { value: 'web', label: 'web' },
-//     { value: 'app', label: 'app' },
-//     { value: 'cyber security', label: 'cyber security' },
-//     { value: 'blockchain', label: 'blockchain' },
-//     { value: 'iot', label: 'iot' },
-//     { value: 'ai', label: 'ai' }
-// ]
+
 
 
 
 
 
 const AddPost = () => {
-    // const [upVoteCount, setUpVoteCount] = useState(0);
-    // const [downVoteCount, setDownVoteCount] = useState(0);
-    // const [authorName, setAuthorName] = useState('');
-    // const [allPosts, setAllPosts] = useState([]);
+
     const [userPostsCount, setUserPostsCount] = useState(0);
     const axiosSecureUser = useAxiosSecure();
-    // const [tag, setTag] = useState('');
-    // const [tags, setTags] = useState([
-    //     'web',
-    //     'app',
-    //     'cyber security',
-    //     'blockchain',
-    //     'iot',
-    //     'ai'
-    // ])
+    const axiosPublicUser = useAxiosPublic();
+    const [allPosts, setAllPosts] = useState([]); //comment this
+
     const { user } = useAuth();
     const {
         register,
@@ -59,29 +46,22 @@ const AddPost = () => {
 
     // console.log(userPostsCount);
 
-    // const {
-    //     data: userPostsCount = 0,
-    //     refetch
-    // } = useQuery({
-    //     queryKey: ['postCount'],
-    //     queryFn: async () => {
-    //         const res = axiosSecureUser.get(`/posts/count/${user?.email}`)
-    //         return res.data;
 
-    //     }
 
-    // })
+    // will be comment out soon start
 
-    // useEffect(() => {
-    //     axiosSecureUser.get('/posts')
-    //         .then(res => {
-    //             console.log(res);
-    //             setAllPosts(res.data)
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         })
-    // }, [axiosSecureUser])
+    useEffect(() => {
+        axiosSecureUser.get('/posts')
+            .then(res => {
+                console.log(res);
+                setAllPosts(res.data)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }, [axiosSecureUser])
+
+    //comment ends
 
 
     const handleAddPostOfUser = async (data) => {
@@ -90,7 +70,7 @@ const AddPost = () => {
             image: data.image[0]
         }
 
-        const response = await axiosSecureUser.post(image_hosting_api, userImageFile, {
+        const response = await axiosPublicUser.post(image_hosting_api, userImageFile, {
             headers: {
                 'content-type': 'multipart/form-data'
             }
@@ -131,25 +111,41 @@ const AddPost = () => {
 
     }
 
-    // const handleUpVoteOfUser = (userPostId) => {
-    //     axiosSecureUser.post('/posts/vote', { userPostId, userVoteType: 'upVote' })
-    //         .then(res => {
-    //             console.log(res);
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         })
-    // };
+    //comment starts
 
-    // const handleDownVoteOfUser = (userPostId) => {
-    //     axiosSecureUser.post('/posts/vote', { userPostId, userVoteType: 'downVote' })
-    //         .then(res => {
-    //             console.log(res);
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         })
-    // };
+    const handleUpVoteOfUser = (userPostId) => {
+        axiosSecureUser.post('/posts/vote', { userPostId, userVoteType: 'upVote' })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    };
+
+    const handleDownVoteOfUser = (userPostId) => {
+        axiosSecureUser.post('/posts/vote', { userPostId, userVoteType: 'downVote' })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    };
+
+    const postDate = (date) => {
+        const postDateAndTime = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+        }
+        return new Date(date).toLocaleDateString(undefined, postDateAndTime)
+    }
+
+    //comment ends
 
 
 
@@ -266,7 +262,9 @@ const AddPost = () => {
                 )
             }
             <div>
-                {/* {
+
+                {/* comment start */}
+                {
                     allPosts.map(post => (
                         <div key={post._id}>
                             <p>{post.postTitle}</p>
@@ -275,6 +273,8 @@ const AddPost = () => {
                             <p>{post.tag}</p>
                             <p>{post.upVote}</p>
                             <p>{post.downVote}</p>
+                            <p>{postDate(post.postTime)}</p>
+
                             <button
                                 onClick={() => handleUpVoteOfUser(post._id)}>
                                 <SlLike />
@@ -283,9 +283,27 @@ const AddPost = () => {
                                 onClick={() => handleDownVoteOfUser(post._id)}>
                                 <SlDislike />
                             </button>
+                            <CommentForm post={post}></CommentForm>
+                            <div className="flex gap-2">
+                                <FacebookShareButton url={window.location.href}>
+                                    <FaFacebook />
+                                </FacebookShareButton>
+                                <LinkedinShareButton url={window.location.href}>
+                                    <FaLinkedin />
+                                </LinkedinShareButton>
+                                <TwitterShareButton url={window.location.href}>
+                                    <FaTwitterSquare />
+                                </TwitterShareButton>
+
+                            </div>
                         </div>
                     ))
-                } */}
+                }
+
+                {/* comment ends */}
+
+
+
                 {/* {
                     allPosts.map(post => (<MyPosts 
                         key={post._id}

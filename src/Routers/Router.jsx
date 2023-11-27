@@ -10,6 +10,7 @@ import DashboardLayout from "../layout/DashboardLayout";
 import MyProfile from "../pages/Dashboard/UserHome/MyProfile/MyProfile";
 import AddPost from "../pages/Dashboard/UserHome/AddPost/AddPost";
 import MyPosts from "../pages/Dashboard/UserHome/MyPosts/MyPosts";
+import MyPostComments from "../pages/Dashboard/UserHome/MyPosts/MyPostComments";
 // import Dashboard from "../layout/Dashboard";
 
 
@@ -56,8 +57,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: "my-posts",
-                element: <MyPosts></MyPosts>
+                element: <MyPosts></MyPosts>,
+                
+            },
+            {
+                path: "my-posts/comments/:id",
+                element: <MyPostComments></MyPostComments>,
+                loader: ({ params }) => fetch(`http://localhost:5000/posts/comments/${params.id}`)
             }
+
 
         ]
     }

@@ -3,15 +3,19 @@ import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { FaRegCommentDots } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+// import { useEffect, useState } from "react";
 
 const MyPosts = () => {
 
     const { user } = useAuth();
     const axiosSecureUser = useAxiosSecure();
+    // const [deletePost, setDeletePost] = useState({});
 
     const {
         data: allPosts = [],
-        // refetch
+        refetch
     } = useQuery({
         queryKey: ['myPost'],
         queryFn: async () => {
@@ -46,6 +50,38 @@ const MyPosts = () => {
 
 
 
+    const handlePostDelete = (id) => {
+        axiosSecureUser.delete(`/posts/${id}`)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.deletedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        title: "Post deleted successfully",
+                        showClass: {
+                            popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                      `
+                        },
+                        hideClass: {
+                            popup: `
+                        animate__animated
+                        animate__fadeOutDown
+                        animate__faster
+                      `
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+
+
     return (
         <div>
 
@@ -66,14 +102,20 @@ const MyPosts = () => {
                     <tbody>
 
                         {
-                            allPosts.map((post, index)=>(
+                            allPosts.map((post, index) => (
                                 <tr key={post._id}>
-                                    <td>{index+1}</td>
+                                    <td>{index + 1}</td>
                                     <td>{post.postTitle}</td>
                                     <td>{post.upVote}</td>
                                     <td>{post.downVote}</td>
-                                    <td><FaRegCommentDots /></td>
-                                    <td><RiDeleteBinLine /></td>
+                                    <Link to={`/dashboard/my-posts/comments/${post._id}`}>
+                                        <td><FaRegCommentDots /></td>
+                                    </Link>
+                                    <td>
+                                        <button onClick={() => handlePostDelete(post._id)}>
+                                            <RiDeleteBinLine />
+                                        </button>
+                                    </td>
                                 </tr>
                             ))
                         }
