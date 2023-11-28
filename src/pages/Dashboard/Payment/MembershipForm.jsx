@@ -77,7 +77,7 @@ const MembershipForm = () => {
                     price: membershipPrice,
                     transactionId: paymentIntent.id,
                     date: new Date(),
-                    status: 'pending'
+                    badge: 'gold'
                 }
                 const res = await axiosSecureUser.post('/payments', payment);
                 console.log('total payment', res.data);

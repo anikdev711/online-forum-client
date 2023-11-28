@@ -26,6 +26,7 @@ const AddPost = () => {
     const [userPostsCount, setUserPostsCount] = useState(0);
     const axiosSecureUser = useAxiosSecure();
     const axiosPublicUser = useAxiosPublic();
+    const [paidUser, setPaidUser] = useState({});
     const [allPosts, setAllPosts] = useState([]); //comment this
 
     const { user } = useAuth();
@@ -45,6 +46,16 @@ const AddPost = () => {
     }, [axiosSecureUser, user?.email])
 
     // console.log(userPostsCount);
+
+    useEffect(() => {
+        axiosSecureUser.get(`/payments/${user?.email}`)
+            .then(res => {
+                console.log(res.data);
+                setPaidUser(res.data);
+            })
+    }, [axiosSecureUser, user?.email])
+
+    console.log(paidUser.badge);
 
 
 
