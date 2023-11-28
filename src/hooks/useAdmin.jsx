@@ -15,7 +15,9 @@ const useAdmin = () => {
             const res = await axiosSecureUser.get(`/users/admin/${user?.email}`);
             console.log(res);
             return res.data?.admin;
-        }
+        },
+        // enabled: user ? true : false
+        // enabled: !loading
     })
 
     return [forumAdmin, forumAdminLoading]
