@@ -7,6 +7,7 @@ import { PiUsersThree } from "react-icons/pi";
 import { MdOutlineCommentsDisabled } from "react-icons/md";
 import { MdCircleNotifications } from "react-icons/md";
 import { MdAttachMoney } from "react-icons/md";
+import { MdPostAdd } from "react-icons/md";
 
 
 const DashboardLayout = () => {
@@ -44,6 +45,9 @@ const DashboardLayout = () => {
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/payment-history"> <MdAttachMoney /> Payment History</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/admin-post"> <MdPostAdd /> Admin Post</NavLink>
                                 </li>
                                 <div className="divider"></div>
                                 <li>

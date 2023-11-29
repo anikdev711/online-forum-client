@@ -4,14 +4,14 @@ import useAuth from "../../../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
-import { SlLike, SlDislike } from "react-icons/sl";
-import {
-    FacebookShareButton,
-    LinkedinShareButton,
-    TwitterShareButton
-} from "react-share";
-import { FaFacebook, FaLinkedin, FaTwitterSquare } from "react-icons/fa";
-import CommentForm from "../../../../components/CommentForm/CommentForm";
+// import { SlLike, SlDislike } from "react-icons/sl";
+// import {
+//     FacebookShareButton,
+//     LinkedinShareButton,
+//     TwitterShareButton
+// } from "react-share";
+// import { FaFacebook, FaLinkedin, FaTwitterSquare } from "react-icons/fa";
+// import CommentForm from "../../../../components/CommentForm/CommentForm";
 import { useQuery } from "@tanstack/react-query";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
@@ -29,7 +29,7 @@ const AddPost = () => {
     const axiosSecureUser = useAxiosSecure();
     const axiosPublicUser = useAxiosPublic();
 
-    const [allPosts, setAllPosts] = useState([]); //comment this
+    // const [allPosts, setAllPosts] = useState([]); //comment this
 
     const { user } = useAuth();
     const {
@@ -70,16 +70,16 @@ const AddPost = () => {
 
     // will be comment out soon start
 
-    useEffect(() => {
-        axiosSecureUser.get('/posts')
-            .then(res => {
-                console.log(res);
-                setAllPosts(res.data)
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }, [axiosSecureUser])
+    // useEffect(() => {
+    //     axiosSecureUser.get('/posts')
+    //         .then(res => {
+    //             console.log(res);
+    //             setAllPosts(res.data)
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         })
+    // }, [axiosSecureUser])
 
     //comment ends
 
@@ -134,37 +134,37 @@ const AddPost = () => {
 
     //comment starts
 
-    const handleUpVoteOfUser = (userPostId) => {
-        axiosSecureUser.post('/posts/vote', { userPostId, userVoteType: 'upVote' })
-            .then(res => {
-                console.log(res);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    };
+    // const handleUpVoteOfUser = (userPostId) => {
+    //     axiosSecureUser.post('/posts/vote', { userPostId, userVoteType: 'upVote' })
+    //         .then(res => {
+    //             console.log(res);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         })
+    // };
 
-    const handleDownVoteOfUser = (userPostId) => {
-        axiosSecureUser.post('/posts/vote', { userPostId, userVoteType: 'downVote' })
-            .then(res => {
-                console.log(res);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    };
+    // const handleDownVoteOfUser = (userPostId) => {
+    //     axiosSecureUser.post('/posts/vote', { userPostId, userVoteType: 'downVote' })
+    //         .then(res => {
+    //             console.log(res);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         })
+    // };
 
-    const postDate = (date) => {
-        const postDateAndTime = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-        }
-        return new Date(date).toLocaleDateString(undefined, postDateAndTime)
-    }
+    // const postDate = (date) => {
+    //     const postDateAndTime = {
+    //         year: 'numeric',
+    //         month: 'long',
+    //         day: 'numeric',
+    //         hour: 'numeric',
+    //         minute: 'numeric',
+    //         second: 'numeric',
+    //     }
+    //     return new Date(date).toLocaleDateString(undefined, postDateAndTime)
+    // }
 
     //comment ends
 
@@ -271,21 +271,22 @@ const AddPost = () => {
                     </div>
 
 
-                ) : ( 
-                                <div>
-                                    <p>Get a membership</p>
-                                    <button
-                                        onClick={() => window.location.href = "/membership"}
-                                        className="btn btn-neutral text-white font-bold ">Become Member</button>
-                                </div>
-    
-                            )
-                
-                
+                ) : (
+                    <div>
+                        <p>Get a membership</p>
+                        <button
+                            onClick={() => window.location.href = "/membership"}
+                            className="btn btn-neutral text-white font-bold ">Become Member</button>
+                    </div>
+
+                )
+
+
             }
+            <div className="divider"></div>
             {
                 (
-                     userPostsCount < 5 ?
+                    userPostsCount < 5 ?
                         (
 
                             <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -383,7 +384,7 @@ const AddPost = () => {
 
 
                             </div>
-                        ) : ( 
+                        ) : (
                             <div>
                                 <p>You have reached maximum post limit</p>
                                 <button
@@ -402,7 +403,7 @@ const AddPost = () => {
 
 
                 {/* comment start */}
-                {
+                {/* {
                     allPosts.map(post => (
                         <div key={post._id}>
                             <p>{post.postTitle}</p>
@@ -436,7 +437,7 @@ const AddPost = () => {
                             </div>
                         </div>
                     ))
-                }
+                } */}
 
                 {/* comment ends */}
 

@@ -20,6 +20,8 @@ import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import PrivateRoute from "./PrivateRoute";
 import UserPayment from "../pages/Dashboard/UserHome/UserPayment/UserPayment";
+import PostDetails from "../pages/Home/PostDetails";
+import AdminPost from "../pages/Dashboard/AdminHome/AdminPost/AdminPost";
 // import Dashboard from "../layout/Dashboard";
 
 
@@ -86,6 +88,11 @@ export const router = createBrowserRouter([
                 path: "user-payment",
                 element: <UserPayment></UserPayment>
             },
+            {
+                path: "post/:id",
+                element: <PostDetails></PostDetails>,
+                loader: ({ params }) => fetch(`http://localhost:5000/posts/${params.id}`)
+            },
 
 
 
@@ -121,6 +128,12 @@ export const router = createBrowserRouter([
                 </AdminRoute>
 
             },
+            {
+                path: "admin-post",
+                element: <AdminRoute>
+                    <AdminPost></AdminPost>
+                </AdminRoute>
+            }
 
 
         ]

@@ -2,12 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from "sweetalert2";
+// import { useState } from "react";
 
 const ManageUsers = () => {
     const axiosSecureUser = useAxiosSecure();
+    // const [page, setPage] = useState(1);
+    // const limit = 10;
     const {
         data: forumUsers = [],
         refetch,
+        // isLoading,
+        // isError,
+        // error
     } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
@@ -82,6 +88,26 @@ const ManageUsers = () => {
     }
 
 
+    // const totalPostPages = Math.ceil(forumUsers?.total / limit);
+    // console.log(totalPostPages);
+
+    // const handlePreviousPage = () => {
+    //     if (page > 1) {
+    //         setPage(page - 1);
+    //     }
+    // }
+
+    // const handleNextPage = () => {
+    //     if (page < totalPostPages) {
+    //         setPage(page + 1);
+    //     }
+    // }
+
+    // if (isError) {
+    //     return <p>Something error: {error}</p>
+    // }
+
+
 
 
 
@@ -110,7 +136,7 @@ const ManageUsers = () => {
                         <tbody>
 
                             {
-                                forumUsers?.map((user, index) => (
+                                forumUsers.map((user, index) => (
                                     <tr key={user._id}>
                                         <td>{index + 1}</td>
                                         <td>{user.name}</td>
@@ -141,6 +167,37 @@ const ManageUsers = () => {
 
 
             </div>
+
+
+            {/* <div>
+                {
+                    isLoading ? <p>Loading...</p> : (
+                        <div className="flex  justify-center items-center mt-10 mb-10">
+                            <div className="join">
+                                <button
+                                    onClick={handlePreviousPage}
+                                    className="join-item btn">«</button>
+                                {
+                                    [...Array(totalPostPages).fill(0)].map((item, index) => {
+                                        const pageNumber = index + 1;
+                                        return (
+                                            <button
+                                                key={pageNumber}
+                                                onClick={() => setPage(pageNumber)}
+                                                className={`${pageNumber === page ? 'join-item btn btn-secondary' : 'join-item btn btn-ghost'}`}>
+                                                {pageNumber}
+                                            </button>
+                                        )
+                                    })
+                                }
+                                <button
+                                    onClick={handleNextPage}
+                                    className="join-item btn">»</button>
+                            </div>
+                        </div>
+                    )
+                }
+            </div> */}
 
 
 
