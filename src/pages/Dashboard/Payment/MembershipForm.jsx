@@ -100,7 +100,7 @@ const MembershipForm = () => {
                           `
                         }
                     });
-                    navigate('/dashboard/payment-history');
+                    navigate('/dashboard/user-payment');
                 }
             }
         }

@@ -19,6 +19,7 @@ import MakeAnnouncement from "../pages/Dashboard/AdminHome/MakeAnnouncement/Make
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import PrivateRoute from "./PrivateRoute";
+import UserPayment from "../pages/Dashboard/UserHome/UserPayment/UserPayment";
 // import Dashboard from "../layout/Dashboard";
 
 
@@ -82,9 +83,10 @@ export const router = createBrowserRouter([
                 element: <Payment></Payment>
             },
             {
-                path: "payment-history",
-                element: <PaymentHistory></PaymentHistory>
+                path: "user-payment",
+                element: <UserPayment></UserPayment>
             },
+
 
 
             //admin routes
@@ -111,7 +113,14 @@ export const router = createBrowserRouter([
                 element: <AdminRoute>
                     <MakeAnnouncement></MakeAnnouncement>
                 </AdminRoute>
-            }
+            },
+            {
+                path: "payment-history",
+                element: <AdminRoute>
+                    <PaymentHistory></PaymentHistory>
+                </AdminRoute>
+
+            },
 
 
         ]

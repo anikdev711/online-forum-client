@@ -6,7 +6,7 @@ import useAdmin from "../hooks/useAdmin";
 import { PiUsersThree } from "react-icons/pi";
 import { MdOutlineCommentsDisabled } from "react-icons/md";
 import { MdCircleNotifications } from "react-icons/md";
-
+import { MdAttachMoney } from "react-icons/md";
 
 
 const DashboardLayout = () => {
@@ -42,6 +42,9 @@ const DashboardLayout = () => {
                                 <li>
                                     <NavLink to="/dashboard/make-announcement"> <MdCircleNotifications /> Make Announcement</NavLink>
                                 </li>
+                                <li>
+                                    <NavLink to="/dashboard/payment-history"> <MdAttachMoney /> Payment History</NavLink>
+                                </li>
                                 <div className="divider"></div>
                                 <li>
 
@@ -59,6 +62,9 @@ const DashboardLayout = () => {
                                     </li>
                                     <li>
                                         <NavLink to="/dashboard/my-posts"> <MdEmail /> My Posts</NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/dashboard/user-payment"> <MdAttachMoney /> My Payment</NavLink>
                                     </li>
                                     <div className="divider"></div>
                                     <li>
