@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
-
+import './ReportedComment.css'
 
 const ReportedComments = () => {
     const axiosSecureUser = useAxiosSecure();
@@ -18,8 +18,8 @@ const ReportedComments = () => {
         <div>
             <h3 className="text-center font-bold text-3xl mb-5">Report Action</h3>
 
-            <div className="overflow-x-auto">
-                <table className="table table-zebra">
+            <div className=" overflow-x-auto">
+                <table className="table table-zebra w-full">
                     {/* head */}
                     <thead>
                         <tr>

@@ -1,25 +1,42 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 // import { FaSearch } from "react-icons/fa";
-const tags = [
-    'web',
-    'app',
-    'ai',
-    'iot',
-    'blockchain',
-    'cyber security'
-]
+// const tags = [
+//     'web',
+//     'app',
+//     'ai',
+//     'iot',
+//     'blockchain',
+//     'cyber security'
+// ]
 
 
 
 const SearchDetails = () => {
 
     const axiosPublicUser = useAxiosPublic();
-    const [tag, setTag] = useState([]);
+    const [tags, setTags] = useState([]);
+    const [tag, setTag] = useState('');
+
+
+    useEffect(() => {
+        axiosPublicUser.get('/tags')
+            .then(res => {
+                // console.log(res.data);
+                setTags(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [axiosPublicUser])
+
+
+
+
     const {
         data: forumPosts,
 
@@ -37,13 +54,13 @@ const SearchDetails = () => {
         e.preventDefault();
         const form = e.target;
         const tagSearch = form.tagSearch.value;
-        const filterTag = tags.find(item => item === tagSearch);
-        setTag(filterTag)
-        console.log(filterTag);
+        const filterTag = tags.find(item => item.tagName === tagSearch);
+        setTag(filterTag.tagName)
+        console.log(filterTag.tagName);
     }
 
 
-
+console.log(tag);
 
 
     return (

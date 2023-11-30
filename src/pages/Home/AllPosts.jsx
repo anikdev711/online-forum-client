@@ -1,20 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
-const tags = [
-    'web',
-    'app',
-    'ai',
-    'iot',
-    'blockchain',
-    'cyber security'
-]
+// const tags = [
+//     'web',
+//     'app',
+//     'ai',
+//     'iot',
+//     'blockchain',
+//     'cyber security'
+// ]
 
 const AllPosts = () => {
     const axiosPublicUser = useAxiosPublic();
+    const [tags, setTags] = useState([]);
     const [tag, setTag] = useState('');
     // const [postTime, setPostTime] = useState(0);
     // const [postTime, setPostTime] = useState('');
@@ -22,6 +23,23 @@ const AllPosts = () => {
     const limit = 5;
     // const sortOrder = 'desc';
     // const postDate = 'postTime';
+
+    useEffect(() => {
+        axiosPublicUser.get('/tags')
+            .then(res => {
+                // console.log(res.data);
+                setTags(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [axiosPublicUser])
+
+    // console.log(tags);
+
+
+
+
     const {
         data: forumPosts,
         isLoading,
@@ -81,8 +99,8 @@ const AllPosts = () => {
 
                             {
                                 tags.map(item => (
-                                    <option key={item} value={item}>
-                                        {item}
+                                    <option key={item._id} value={item.tagName}>
+                                        {item.tagName}
                                     </option>
                                 ))
                             }
