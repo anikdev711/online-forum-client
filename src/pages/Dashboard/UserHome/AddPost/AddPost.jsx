@@ -28,6 +28,7 @@ const AddPost = () => {
     // const [goldBadgeUser, setGoldBadgeUser] = useState({});
     const axiosSecureUser = useAxiosSecure();
     const axiosPublicUser = useAxiosPublic();
+    const [tags, setTags] = useState([]);
 
     // const [allPosts, setAllPosts] = useState([]); //comment this
 
@@ -48,6 +49,20 @@ const AddPost = () => {
     }, [axiosSecureUser, user?.email])
 
     // console.log(userPostsCount);
+
+    useEffect(() => {
+        axiosSecureUser.get('/tags')
+            .then(res => {
+                // console.log(res.data);
+                setTags(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [axiosSecureUser])
+
+
+
 
     const {
         data: forumMember = {},
@@ -174,6 +189,10 @@ const AddPost = () => {
 
     return (
         <div>
+            <div>
+                <h3>Please use this form (if there are two form is showing, and one form is not working, then use another form) </h3>
+            </div>
+
             {
                 forumMember?.badge === 'gold' ? (
 
@@ -252,12 +271,24 @@ const AddPost = () => {
                                     id=""
                                     className="select select-bordered w-full"
                                     defaultValue="default">
-                                    <option value="web">web</option>
+                                    {/* <option value="web">web</option>
                                     <option value="app">app</option>
                                     <option value="iot">iot</option>
                                     <option value="ai">ai</option>
                                     <option value="cyber security">cyber security</option>
-                                    <option value="blockchain">blockchain</option>
+                                    <option value="blockchain">blockchain</option> */}
+
+                                    <option disabled selected>Pick one</option>
+
+                                    {
+                                        tags.map(item => (
+                                            <option key={item._id} value={item.tagName}>
+                                                {item.tagName}
+                                            </option>
+                                        ))
+                                    }
+
+
                                 </select>
 
                             </div>
@@ -273,7 +304,7 @@ const AddPost = () => {
 
                 ) : (
                     <div>
-                        <p>Get a membership</p>
+                        <p>Get a membership (if you paid once, you need not pay again for a year) </p>
                         <button
                             onClick={() => window.location.href = "/membership"}
                             className="btn btn-neutral text-white font-bold ">Become Member</button>
@@ -284,6 +315,9 @@ const AddPost = () => {
 
             }
             <div className="divider"></div>
+            <div>
+                <h3>Please use this form (if there are two form is showing, and one form is not working, then use another form) </h3>
+            </div>
             {
                 (
                     userPostsCount < 5 ?
@@ -364,12 +398,21 @@ const AddPost = () => {
                                             id=""
                                             className="select select-bordered w-full"
                                             defaultValue="default">
-                                            <option value="web">web</option>
+                                            {/* <option value="web">web</option>
                                             <option value="app">app</option>
                                             <option value="iot">iot</option>
                                             <option value="ai">ai</option>
                                             <option value="cyber security">cyber security</option>
-                                            <option value="blockchain">blockchain</option>
+                                            <option value="blockchain">blockchain</option> */}
+                                            <option disabled selected>Pick one</option>
+
+                                            {
+                                                tags.map(item => (
+                                                    <option key={item._id} value={item.tagName}>
+                                                        {item.tagName}
+                                                    </option>
+                                                ))
+                                            }
                                         </select>
 
                                     </div>
@@ -386,7 +429,7 @@ const AddPost = () => {
                             </div>
                         ) : (
                             <div>
-                                <p>You have reached maximum post limit</p>
+                                <p>Please become a member (If you paid, you need not to pay again for a year)</p>
                                 <button
                                     onClick={() => window.location.href = "/membership"}
                                     className="btn btn-neutral text-white font-bold ">Become Member</button>

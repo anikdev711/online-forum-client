@@ -78,7 +78,7 @@ export const router = createBrowserRouter([
             {
                 path: "my-posts/comments/:id",
                 element: <MyPostComments></MyPostComments>,
-                loader: ({ params }) => fetch(`http://localhost:5000/posts/comments/${params.id}`)
+                loader: ({ params }) => fetch(`https://online-forum-server-ten.vercel.app/posts/comments/${params.id}`)
             },
             {
                 path: "payment",
@@ -91,7 +91,7 @@ export const router = createBrowserRouter([
             {
                 path: "post/:id",
                 element: <PostDetails></PostDetails>,
-                loader: ({ params }) => fetch(`http://localhost:5000/posts/${params.id}`)
+                loader: ({ params }) => fetch(`https://online-forum-server-ten.vercel.app/posts/${params.id}`)
             },
 
 
