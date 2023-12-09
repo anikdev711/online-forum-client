@@ -2,12 +2,6 @@ Assignment Category: assignment12_category_0001
 
 Website Name: Byte Talks
 
-Admin name: Byte Talks Admin
-
-Admin email: admin@bytetalksforum.com
-
-Admin password: 1234567Admin$
-
 Front-end Live Site Link (firebase): https://online-forum-auth.web.app/
 
 Alternative Front-end Live Site Link (Netlify): https://6568625c76ceac0fcdbeb58e--fantastic-cuchufli-23144a.netlify.app/
